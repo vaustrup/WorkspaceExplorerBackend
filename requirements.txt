@@ -1,0 +1,4 @@
+pyhf==0.6.3
+cabinetry
+flask
+flask_cors
