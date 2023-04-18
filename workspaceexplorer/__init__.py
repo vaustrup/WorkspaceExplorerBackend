@@ -15,7 +15,6 @@ def init_app(config="config.DevelopmentConfig"):
             result_accept_content=["json"],
         ),
     )
-    #CORS(app)
     
     celery_init_app(app)
     with app.app_context():
