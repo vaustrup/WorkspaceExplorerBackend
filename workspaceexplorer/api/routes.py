@@ -21,7 +21,6 @@ def post_workspace():
         return "FAILURE", 400
     workspace = pyhf.Workspace(spec)
     result = fit_workspace.delay(workspace.model(), workspace.data(workspace.model()))
-    print(result.id)
     return {"result_id": result.id}
 
 
@@ -39,7 +38,11 @@ def fit_result(id: str) -> dict[str, object]:
 def fit_workspace(model, data):
     try: 
         fit_results = cabinetry.fit.fit(model, data)
-        print(fit_results)
-        return {"bestfit": fit_results.bestfit.tolist(), "uncertainty": fit_results.uncertainty.tolist(), "labels": fit_results.labels}
+        return {
+                "bestfit": fit_results.bestfit.tolist(),
+                "uncertainty": fit_results.uncertainty.tolist(),
+                "correlations":fit_results.corr_mat.tolist(),
+                "labels": fit_results.labels
+                }
     except Exception as e:
         return repr(e)
